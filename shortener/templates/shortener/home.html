@@ -1,0 +1,18 @@
+{% extends "shortener/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div>
+        <form method="POST" class="form-inline">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ form|crispy }}
+            </fieldset>
+
+            <div class="form-group">
+                <button class="btn btn-secondary ml-3" type="submit">Make It Short !!!</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
