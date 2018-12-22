@@ -10,3 +10,6 @@ class LinkModelForm(forms.ModelForm):
             'url': '',
         }
 
+
+class LinkInfoForm(forms.Form):
+    url = forms.URLField(disabled=True, label=False)

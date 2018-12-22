@@ -1,0 +1,39 @@
+{% extends "shortener/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div>
+        <form class="form-inline">
+            <fieldset class="form-group">
+                {{ form|crispy }}
+            </fieldset>
+
+            <div class="form-group">
+                <button id="copy" class="btn btn-secondary ml-3" type="button">Copy</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}
+
+{% block script %}
+    <script>
+        /* source: https://css-tricks.com/native-browser-copy-clipboard/ */
+        var copyURLButton = document.querySelector('#copy');
+        copyURLButton.addEventListener('click', function (event) {
+            var url = document.querySelector('#id_url');
+            var range = document.createRange();
+            range.selectNode(url);
+            window.getSelection().addRange(range);
+
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                console.log('Copy url command was ' + msg);
+            } catch (err) {
+                console.log('Oops, unable to copy');
+            }
+            window.getSelection().removeAllRanges();
+        });
+    </script>
+{% endblock script %}
