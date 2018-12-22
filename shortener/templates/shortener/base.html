@@ -101,18 +101,21 @@
       </header>
 
       <main role="main" class="inner cover">
-        <h1 class="cover-heading">Short My Url Baby </h1>
+      <h1 class="cover-heading"><a href="{% url "home-view" %}">Short My Url Baby</a></h1>
         <p class="lead">
             {% if messages %}
                 {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">
-                        {{ message }}
+                    <div class="my2-4">
+                        <p>
+                            {{ message }}
+                        </p>
                     </div>
                 {% endfor %}
             {% endif %}
 
             {% block content %}
             {% endblock %}
+
         </p>
       </main>
 

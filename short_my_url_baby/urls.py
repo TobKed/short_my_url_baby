@@ -15,7 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from shortener.views import HomeView, link_details, link_redirect
+from shortener.views import (
+    HomeView,
+    link_details,
+    link_redirect,
+    handler404,
+    handler500
+)
+
+handler404 = handler404
+handler500 = handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),

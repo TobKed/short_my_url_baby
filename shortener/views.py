@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 from .models import Link
 from .forms import LinkModelForm, LinkInfoForm
 
@@ -26,9 +27,11 @@ class HomeView(View):
 
 
 def link_details(request, link_id):
+    instance = get_object_or_404(Link, link_id=link_id)
     link = reverse('link-redirect-view', kwargs={"link_id": link_id})
     host = request.get_host()
     form = LinkInfoForm(initial={"url": host+link})
+    messages.info(request, instance.url)
     context = {
         "form": form,
     }
@@ -38,3 +41,13 @@ def link_details(request, link_id):
 def link_redirect(request, link_id):
     instance = get_object_or_404(Link, link_id=link_id)
     return HttpResponseRedirect(instance.url)
+
+
+def handler404(request):
+    messages.error(request, "Error 404")
+    return render(request, 'shortener/base.html', status=404)
+
+
+def handler500(request):
+    messages.error(request, "Error 500")
+    return render(request, 'shortener/base.html', status=500)
