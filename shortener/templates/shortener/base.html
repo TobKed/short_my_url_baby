@@ -91,10 +91,7 @@
         <title>Short My Url Baby</title>
     {% endif %}
 </head>
-<body>
-
-
-  <body class="text-center">
+<body class="text-center">
 
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
@@ -102,7 +99,7 @@
 
       <main role="main" class="inner cover">
       <h1 class="cover-heading"><a href="{% url "home-view" %}">Short My Url Baby</a></h1>
-        <p class="lead">
+        <div class="lead">
             {% if messages %}
                 {% for message in messages %}
                     <div class="my2-4">
@@ -115,8 +112,7 @@
 
             {% block content %}
             {% endblock %}
-
-        </p>
+        </div>
       </main>
 
       <footer class="mastfoot mt-auto">
@@ -124,6 +120,7 @@
           <p><a href="https://tobked.github.io/">Tobiasz Kędzierski</a></p>
         </div>
       </footer>
+
     </div>
 
 <!-- Optional JavaScript -->
