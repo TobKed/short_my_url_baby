@@ -1,2 +1,6 @@
-# short_my_url_baby
+# Short My URL Baby
 
+### https://short-my-url-baby.herokuapp.com/
+
+require ChromeDriver for Selenium tests
+https://github.com/SergeyPirogov/webdriver_manager
