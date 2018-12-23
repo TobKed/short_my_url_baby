@@ -14,16 +14,14 @@ class HomeView(View):
 
     def get(self, request):
         form = self.form_class(initial=self.initial)
-        context = {
-            "form": form,
-        }
-        return render(request, self.template_name, context)
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
             instance = form.save()
             return redirect('link-details-view', link_id=instance.link_id)
+        return render(request, self.template_name, {"form": form})
 
 
 def link_details(request, link_id):
