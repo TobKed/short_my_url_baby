@@ -15,20 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from shortener.views import (
     HomeView,
+    handler404,
+    handler500,
     link_details,
     link_redirect,
-    handler404,
-    handler500
 )
 
 handler404 = handler404
 handler500 = handler500
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', HomeView.as_view(), name='home-view'),
-    path('<str:link_id>/info', link_details, name='link-details-view'),
-    path('<str:link_id>', link_redirect, name='link-redirect-view'),
+    path("admin/", admin.site.urls),
+    path("", HomeView.as_view(), name="home-view"),
+    path("<str:link_id>/info", link_details, name="link-details-view"),
+    path("<str:link_id>", link_redirect, name="link-redirect-view"),
 ]

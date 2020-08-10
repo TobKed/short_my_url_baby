@@ -1,0 +1,45 @@
+---
+repos:
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.0.8
+    hooks:
+      - id: isort
+        args: ['--multi-line', '3', '--trailing-comma']
+        name: Run isort to sort imports
+        types: [python]
+  - repo: https://github.com/ambv/black
+    rev: 19.3b0
+    hooks:
+      - id: black
+        name: Formats python files using black
+        language_version: python3.6
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.1.6
+    hooks:
+      - id: forbid-tabs
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.3
+    hooks:
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+  - repo: local
+    hooks:
+      - id: autoflake
+        name: Autoflake - removes unused imports and variables
+        entry: autoflake
+        language: python
+        files: \.py$
+        args: ['--in-place', '--remove-all-unused-imports',
+               '--remove-unused-variable', '--recursive']
+      - id: pylint
+        name: Checks for common programming errors with pylint
+        language: python
+        entry: pylint
+        require_serial: true
+        files: (airflow_munchkin|tests)/.+\.py$

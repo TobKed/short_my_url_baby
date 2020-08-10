@@ -1,5 +1,5 @@
-from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -38,10 +38,10 @@ class HomePage(BasePage):
 
 
 def get_final_url(driver, url):
-        test_page = BasePage(driver)
-        test_page.url = url
-        test_page.navigate()
-        return driver.current_url
+    test_page = BasePage(driver)
+    test_page.url = url
+    test_page.navigate()
+    return driver.current_url
 
 
 class LogInTest(StaticLiveServerTestCase):

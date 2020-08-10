@@ -25,32 +25,33 @@ from itertools import chain
 
 try:
     from django.conf import settings
+
     # Prod the lazy settings to provoke any ImportError caused by a
     # missing settings file
-    getattr(settings, 'DEBUG', None)
+    getattr(settings, "DEBUG", None)
 except ImportError:
     settings = None
 
 # Keep this small for shorter strings, but big enough to avoid changing
 # it later. If you do change it later, it might be a good idea to specify a
 # STRING_LENGTH change, making all future strings longer, and therefore unique.
-SIZE = getattr(settings, 'FRIENDLY_ID_SIZE', 10000000)
+SIZE = getattr(settings, "FRIENDLY_ID_SIZE", 10000000)
 
 # OPTIONAL PARAMETERS
 # This just means we don't start with the first number, to mix things up
-OFFSET = getattr(settings, 'FRIENDLY_ID_OFFSET', SIZE / 2 - 1)
+OFFSET = getattr(settings, "FRIENDLY_ID_OFFSET", SIZE / 2 - 1)
 # Alpha numeric characters, only uppercase, no confusing values (eg 1/I,0/O,Z/2)
 # Remove some letters if you prefer more numbers in your strings
 # You may wish to remove letters that sound similar, to avoid confusion when a
 # customer calls on the phone (B/P, M/N, 3/C/D/E/G/T/V)
-VALID_CHARS = getattr(settings, 'FRIENDLY_ID_VALID_CHARS', "3456789ACDEFGHJKLQRSTUVWXY")
+VALID_CHARS = getattr(settings, "FRIENDLY_ID_VALID_CHARS", "3456789ACDEFGHJKLQRSTUVWXY")
 # Don't set this if you don't know what you're doing, you run the risk
 # It can be used to mix up the strings differently to how others using this code
 # would, but be careful to pick a factor of SIZE.
-PERIOD = getattr(settings, 'FRIENDLY_ID_PERIOD', None)
+PERIOD = getattr(settings, "FRIENDLY_ID_PERIOD", None)
 # Don't set this, it isn't necessary and you'll get ugly strings like 'AAAAAB3D'
 # It will be otherwise done automatically to match SIZE
-STRING_LENGTH = getattr(settings, 'FRIENDLY_ID_STRING_LENGTH', None)
+STRING_LENGTH = getattr(settings, "FRIENDLY_ID_STRING_LENGTH", None)
 
 
 def find_suitable_period():
@@ -66,12 +67,19 @@ def find_suitable_period():
     # low (eg 2) and the period is too small.
     # We would prefer it to be lower than the number of VALID_CHARS, but more
     # than say 4.
-    starting_point = len(VALID_CHARS) > 14 and len(VALID_CHARS)/2 or 13
-    for p in list(chain(range(int(starting_point), 7, -1),
-                        range(highest_acceptable_factor, int(starting_point)+1, -1))) + [6, 5, 4, 3, 2]:
+    starting_point = len(VALID_CHARS) > 14 and len(VALID_CHARS) / 2 or 13
+    for p in list(
+        chain(
+            range(int(starting_point), 7, -1),
+            range(highest_acceptable_factor, int(starting_point) + 1, -1),
+        )
+    ) + [6, 5, 4, 3, 2]:
         if SIZE % p == 0:
             return p
-    raise Exception("No valid period could be found for SIZE=%d. Try avoiding prime numbers :-)" % SIZE)
+    raise Exception(
+        "No valid period could be found for SIZE=%d. Try avoiding prime numbers :-)"
+        % SIZE
+    )
 
 
 # Set the period if it is missing
@@ -83,7 +91,7 @@ def perfect_hash(num):
     """ Translate a number to another unique number, using a perfect hash function.
         Only meaningful where 0 <= num <= SIZE.
     """
-    return ((num+OFFSET)*(SIZE/PERIOD)) % (SIZE+1) + 1
+    return ((num + OFFSET) * (SIZE / PERIOD)) % (SIZE + 1) + 1
 
 
 def friendly_number(num):
@@ -97,11 +105,14 @@ def friendly_number(num):
     string = ""
     # The length of the string can be determined by STRING_LENGTH or by how many
     # characters are necessary to present a base 30 representation of SIZE.
-    while STRING_LENGTH and len(string) <= STRING_LENGTH \
-            or len(VALID_CHARS)**len(string) <= SIZE:
+    while (
+        STRING_LENGTH
+        and len(string) <= STRING_LENGTH
+        or len(VALID_CHARS) ** len(string) <= SIZE
+    ):
         # PREpend string (to remove all obvious signs of order)
         string = VALID_CHARS[int(num % len(VALID_CHARS))] + string
-        num = num/len(VALID_CHARS)
+        num = num / len(VALID_CHARS)
     return string
 
 
