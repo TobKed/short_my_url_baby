@@ -2,7 +2,7 @@
 
 #### https://short-my-url-baby.herokuapp.com/
 
-require ChromeDriver for Selenium tests 
+require ChromeDriver for Selenium tests
 (https://github.com/SergeyPirogov/webdriver_manager)
 
 shortened url looks like:

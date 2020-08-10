@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'short_my_url_baby.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "short_my_url_baby.settings")
 
 application = get_wsgi_application()

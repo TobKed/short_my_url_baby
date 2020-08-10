@@ -1,4 +1,5 @@
-"""short_my_url_baby URL Configuration
+"""
+short_my_url_baby URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -15,20 +16,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+
 from shortener.views import (
     HomeView,
+    handler404,
+    handler500,
     link_details,
     link_redirect,
-    handler404,
-    handler500
 )
 
 handler404 = handler404
 handler500 = handler500
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', HomeView.as_view(), name='home-view'),
-    path('<str:link_id>/info', link_details, name='link-details-view'),
-    path('<str:link_id>', link_redirect, name='link-redirect-view'),
+    path("admin/", admin.site.urls),
+    path("", HomeView.as_view(), name="home-view"),
+    path("<str:link_id>/info", link_details, name="link-details-view"),
+    path("<str:link_id>", link_redirect, name="link-redirect-view"),
 ]
