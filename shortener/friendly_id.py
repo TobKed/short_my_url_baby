@@ -55,10 +55,11 @@ STRING_LENGTH = getattr(settings, "FRIENDLY_ID_STRING_LENGTH", None)
 
 
 def find_suitable_period():
-    """ Automatically find a suitable period to use.
-        Factors are best, because they will have 1 left over when
-        dividing SIZE+1.
-        This only needs to be run once, on import.
+    """
+    Automatically find a suitable period to use.
+    Factors are best, because they will have 1 left over when
+    dividing SIZE+1.
+    This only needs to be run once, on import.
     """
     # The highest acceptable factor will be the square root of the size.
     highest_acceptable_factor = int(math.sqrt(SIZE))
@@ -88,18 +89,20 @@ if not PERIOD:
 
 
 def perfect_hash(num):
-    """ Translate a number to another unique number, using a perfect hash function.
-        Only meaningful where 0 <= num <= SIZE.
+    """
+    Translate a number to another unique number, using a perfect hash function.
+    Only meaningful where 0 <= num <= SIZE.
     """
     return ((num + OFFSET) * (SIZE / PERIOD)) % (SIZE + 1) + 1
 
 
 def friendly_number(num):
-    """ Convert a base 10 number to a base X string.
-        Charcters from VALID_CHARS are chosen, to convert the number
-        to eg base 24, if there are 24 characters to choose from.
-        Use valid chars to choose characters that are friendly, avoiding
-        ones that could be confused in print or over the phone.
+    """
+    Convert a base 10 number to a base X string.
+    Charcters from VALID_CHARS are chosen, to convert the number
+    to eg base 24, if there are 24 characters to choose from.
+    Use valid chars to choose characters that are friendly, avoiding
+    ones that could be confused in print or over the phone.
     """
     # Convert to a (shorter) string for human consumption
     string = ""
@@ -117,8 +120,9 @@ def friendly_number(num):
 
 
 def encode(num):
-    """ Encode a simple number, using a perfect hash and converting to a
-        more user friendly string of characters.
+    """
+    Encode a simple number, using a perfect hash and converting to a
+    more user friendly string of characters.
     """
     # Check the number is within our working range
     if num > SIZE or num < 0:
